@@ -21,7 +21,7 @@
 
     <groupId>com.datastax.oss</groupId>
     <artifactId>java-driver-policies</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>Extra Policies for Apache Cassandra Java Driver</name>
     <description>A collection of extra policies for the Apache Cassandra Java Driver.</description>
     <url>https://github.com/datastax/java-driver-policies</url>

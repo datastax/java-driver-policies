@@ -12,7 +12,7 @@ To use either of the policies, you need to include both the Java driver and this
         <dependency>
             <groupId>com.datastax.oss</groupId>
             <artifactId>java-driver-policies</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
 ```
 
