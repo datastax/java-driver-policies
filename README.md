@@ -5,9 +5,9 @@ Currently, this package contains two load balancing policies to be used with the
 To use either of the policies, you need to include both the Java driver and this package as dependencies.
 ```xml
         <dependency>
-            <groupId>com.datastax.oss</groupId>
+            <groupId>org.apache.cassandra</groupId>
             <artifactId>java-driver-core</artifactId>
-            <version>4.10.0</version>
+            <version>4.18.0</version>
         </dependency>
         <dependency>
             <groupId>com.datastax.oss</groupId>
@@ -15,6 +15,8 @@ To use either of the policies, you need to include both the Java driver and this
             <version>1.1</version>
         </dependency>
 ```
+
+It is also compatible with older versions of the driver (version 4.10.0 and above), including the ones with `com.datastax.oss` group ID.
 
 You also have to specify the name of the load balancing policy class in your `application.conf` (see [this](https://docs.datastax.com/en/developer/java-driver/4.17/manual/core/load_balancing/index.html#load-balancing)).
 ```conf
@@ -27,7 +29,7 @@ datastax-java-driver.basic.load-balancing-policy {
 We recommend the `DefaultLoadBalancingPolicy` that comes with the Java Driver for general use. 
 This policy leverages real-time measurements and swiftly responds to changes in node status at short intervals, such as those caused by garbage collection or compaction—common factors that can slow down nodes. 
 
-However, if you anticipate prolonged delays in node responsiveness, such as during network upgrades or heavy data migrations, you might consider opting for the `LatencyAndInflightCountLoadBalancingPolicy` or `LatencySensitiveLoadBalancingPolicy`.
+However, if you anticipate prolonged delays in node responsiveness, such as during network upgrades or heavy data migrations, you might consider opting for the `LatencyAndInflightCountLoadBalancingPolicy`.
 
 `LatencySensitiveLoadBalancingPolicy` behaves the closest to the 3.x java driver's `TokenAwarePolicy(LatencyAwarePolicy(DCAwareRoundRobinPolicy))`. 
 They have an advantage over 4.x `DefaultLoadBalancingPolicy` when nodes are slowed for a long time, because they both depend on historical data. 
@@ -46,4 +48,4 @@ Below is the client-side latency and the throughput of the 3.x driver, `LatencyA
 
 We can see that the client-side latency for both `LatencyAndInflightCountLoadBalancingPolicy` and the 4.x `DefaultLoadBalancingPolicy` almost doesn't change while the 3.x driver's latency raises significantly.
 
-We believe quick changes in node status are more common in production environments and therefore recommend either the 4.x `DefaultLoadBalancingPolicy` or `LatencyAndInflightCountLoadBalancingPolicy` for general use.  You should consider `LatencySensitiveLoadBalancingPolicy` when you anticipate prolonged delays in node responsiveness.
+We believe quick changes in node status are more common in production environments and therefore recommend either the 4.x `DefaultLoadBalancingPolicy` or `LatencyAndInflightCountLoadBalancingPolicy` to get busy node avoidance behaviour as described above.
